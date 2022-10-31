@@ -1,4 +1,4 @@
-ARG JULIA_VERSION=1.5.2
+ARG JULIA_VERSION=1.8.1
 FROM julia:${JULIA_VERSION}
 
 ########################################################
