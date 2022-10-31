@@ -32,11 +32,25 @@ end
 TableOfContents(title="MATH Seminar, Monday Oct. 31")
 
 # ╔═╡ 07d5b126-4150-11ed-24e1-eb98b921c8c6
+begin
+qr_code=Resource("https://www.dropbox.com/s/1d4y1rjie7lrml2/website_qrcode.png?raw=1"
+)
 md"""
 # Optimization Algebraic Modeling
+__KFUPM, Math Seminar, Monday October 31, 2022__
+
+__*Dr. Mohammed Alshahrani*__
+
+__Talk and Code__
+
+$qr_code
+
+[code on github](https://github.com/mmogib/MathSeminarT221)
+
 ## Abstract
 Many researchers at a point of time have to solve an optimization problem. These problems range from simple unconstrained function to a complex model of many variables and constraints. In this talk, we introduce the concept of algebraic modeling in optimization which is used to translate between the algebraic form of the modeler and the standard form of the solver. It aims to allow researchers to express their optimization problems in a natural, algebraic form similar to the original mathematical expressions. Examples from different branches of optimization will be given for illustration.
 """
+end
 
 # ╔═╡ d716ec58-253d-4267-9497-7497fe639c6a
 md"""
