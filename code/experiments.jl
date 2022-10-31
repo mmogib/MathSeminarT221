@@ -113,7 +113,7 @@ Here's the problem:
 
 # ╔═╡ b193fb26-5736-4b37-9c8c-6a44072b4a6d
 md"""
-To solve this problem, we need to employ a solver. One such solve is [HiGHS](https://highs.dev/). This is an Open source serial and parallel solvers for large-scale sparse linear programming (LP), mixed-integer programming (MIP), and quadratic programming (QP) models developed in C++.
+To solve this problem, we need to employ a solver. One such solver is [HiGHS](https://highs.dev/) which is an Open source serial and parallel solvers for large-scale sparse linear programming (LP), mixed-integer programming (MIP), and quadratic programming (QP) models developed in C++.
 
 To use this solver, we must __load the model__. Loading a model in HiGHS is via
 - from data file (.lp, .mps)
@@ -256,7 +256,7 @@ md"""
 
 # ╔═╡ b51da029-f797-45d9-9309-c18050474ca6
 md"""
-### Algebraic Modeling Languages: 
+### Algebraic Modeling Languages
 An __algebraic modeling langauge (AML)__ takes a __mathematical optimization problem__ written by a
 user, converts it into __a standard form__, passes that standard form to a __solver__, waits for the solver to complete, then queries the solver for a solution and __returns the solution to the user__.
 
@@ -715,7 +715,7 @@ html"""
   <div style="text-align:center;">
     <div class="wrapper-2">
       <h6 style="color:blue;font:'Kaushan Script';font-size:4em;">Thank you !</h6>
-      <p>Thanks for attending.</p>
+      <p>for attending.</p>
     </div>
 </div>
 </div>
@@ -2213,7 +2213,7 @@ version = "1.4.1+0"
 # ╟─c57bcac2-9cb7-4c6d-ac7f-3436d3cbcc6f
 # ╟─43a9716e-d735-47d1-b209-77754bad82ab
 # ╟─78e26d05-cd83-4029-a300-b21a38f7d724
-# ╠═738f6aa6-7780-41c4-89ef-948946ba81b6
+# ╟─738f6aa6-7780-41c4-89ef-948946ba81b6
 # ╟─197a354d-e466-4aeb-8590-b176f6fc96bd
 # ╟─38573590-c70a-413c-a141-8733b0ee1a6e
 # ╟─53357188-bb77-41aa-b7a5-3dfe7ff4739e
