@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.14
+# v0.19.12
 
 using Markdown
 using InteractiveUtils
@@ -191,6 +191,8 @@ begin
 	y1v = value(y1)
 	c11v = shadow_price(c11)
 	c12v = shadow_price(c12)
+	solution_summary(model1)
+	
 	md"""
 	__objective value = $(objective_value(model1))__
 
@@ -207,24 +209,24 @@ begin
 	shadow price 1 : __$c11v__ , 	right hand side = $(6*x1v+8*y1v)
 	
 	shadow price 2 : __$c12v__ , 	right hand side = $(7*x1v+12*y1v)
-	
-	
+
+	simplex iterations : $(simplex_iterations(model1))
 	"""
 end
 
 # ╔═╡ 0e4cdd43-3fc0-467f-b004-250fbaf53ac0
 md"""
 ## History
-- The __first__ computer __LP solver__ was in the late __1950__'s when William OrchardHays, working at the __RAND Corporation__ in consultation with __George Dantzig__, developed a system with the computer code on __punched cards__.
+- The __first__ computer __LP solver__ was in the late __1950__'s when William OrchardHays, working at the __[RAND Corporation](https://www.rand.org/)__ in consultation with __[George Dantzig](https://www.rand.org/pubs/authors/d/dantzig_george_bernard.html)__, developed a system with the computer code on __punched cards__.
 - In the __1960__'s, supported by oil companies, __MPS/360__ (later MPSX) was devolped. (MPS: Mathematical Programming System)
-- In __1970__'s General Algebraic Modeling System [(GAMS)](https://www.gams.com/latest/docs/gams.pdf) was designed and introduced By Meeraus and Bisschop while working for the World Bank.
+- In __1970__'s General Algebraic Modeling System [(GAMS)](https://www.gams.com/latest/docs/gams.pdf) was designed and introduced By [Meeraus and Bisschop](https://link.springer.com/chapter/10.1007/BFb0121223) while working for the World Bank.
 - In __1983__, __mp-model__ (which is a declarative modeling language for LP and MILP problems). This was replaced by [(Mosel)](https://www.fico.com/fico-xpress-optimization/docs/latest/mosel/mosel_lang/dhtml/moselreflang.html) in 2001.
-- In 1985-86, at Bell Laboratories, Robert Fourer, David M. Gay, and Brian W. Kernighan developed __AMPL__.
+- In 1985-86, at Bell Laboratories, Robert Fourer, David M. Gay, and Brian W. Kernighan developed __[AMPL](https://ampl.com/)__.
 - In 1989, [LINGO](https://www.lindo.com/index.php/products/lingo-and-optimization-modeling) appeared.
-- In early __1990__s, __AIMMS__ was deveolped as the first modeling system to offer graphical user interfaces.
-- In __2006__, __[CVX](#cvx2006)__, which is a package for specifying and solving convex programs written in __MATLAB__.
-- In __2008__, the first version of __Pyomo__ appeared. Pyomo (Python Optimization Modeling Objects) is a collection of packages for the general purpose programming language Python and provides tools and constructs needed to build models, declare variables, sets, solver interfaces, etc.
-- In 2015, __JuMP__ first prototype appeared. It is one of, if not, the youngest environment to create optimization models. It is written in Julia programming language (first version was released in 2012).
+- In early __1990__s, __[AIMMS](https://www.aimms.com/)__ was deveolped as the first modeling system to offer graphical user interfaces.
+- In __2006__, __[CVX](http://cvxr.com/cvx/)__, which is a package for specifying and solving convex programs written in __MATLAB__.
+- In __2008__, the first version of __[Pyomo](http://www.pyomo.org/)__ appeared. Pyomo (Python Optimization Modeling Objects) is a collection of packages for the general purpose programming language Python and provides tools and constructs needed to build models, declare variables, sets, solver interfaces, etc.
+- In 2015, __[JuMP](https://jump.dev/)__ first prototype appeared. It is one of, if not, the youngest environment to create optimization models. It is written in __[Julia](https://julialang.org/)__ programming language (first version was released in 2012).
 
 """
 
@@ -234,7 +236,7 @@ md"""
 
 1. __Algebraic Modeling Languages__
 2. __Non-algebraic Modeling Languages__: build models in an __object oriented way__.
-3. __Integrated Modeling Environments__: A more __graphical approach__ to model building is taken by the so called integrated modeling environments. exploiting graphical user interfaces (GUI) for various tasks.
+3. __Integrated Modeling Environments__: A more __graphical approach__ to model building is taken by the so called integrated modeling environments exploiting graphical user interfaces (GUI) for various tasks.
 4. __Model-Programming Languages__: __built-in scripting capabilities__, but these new languages provide elements for declaring models and for describing solution algorithms in a much more integrated way. 
 """
 
@@ -257,13 +259,13 @@ Some algebraic modeling languages such as
 - CVX
 - Pyomo
 - JuMP
-have syntax similar to the mathematical notation of optimization problems.
+have __syntax similar to the mathematical notation__ of optimization problems.
 
 
-Algebraic modeling languages can be viewed as a __new paradigm__ of programming. Usually programming languages are divided into three different classes:
+Algebraic modeling languages can be viewed as a __new paradigm__ of programming. Usually programming languages are divided into three different classes:
 - __Imperative Languages__: procedural languages and object oriented programming, for example C, C++, Pascal, FORTRAN, Java.
 - __Functional Languages__:  every computation can be viewed as a function ``f : X \to Y`` translating an input from ``X`` to a unique output in ``Y``. For example: LISP, haskel.
-- __Logic Programming Languages__:It was designed to prove mathematical theorems. Every mathematical proof can be regarded as a computation following specific rules. In the reverse, every computation can as well be regarded as a proof. For example Prolog.
+- __Logic Programming Languages__: designed to prove mathematical theorems. Every mathematical proof can be regarded as a computation following specific rules. In the reverse, every computation can as well be regarded as a proof. For example __Prolog__.
 
 """
 
@@ -310,7 +312,7 @@ The role of a modeling language for __nonlinear optimization__ is to
 __JuMP__, like __AMPL__ and __GAMS__, uses techniques from __automatic (or algorithmic)__ differentiation to __evaluate derivatives__ of __user-defined expressions__.
 
 ### Expression Graphs and Reverse-Mode AD.
-- the expression graph, which is a __directed acyclic graph__ (or, typically, a __tree__) that encodes the sequence of operations required to compute the expression as well as the dependency structure between operations.
+- the expression graph, which is a __directed acyclic graph__ (or, typically, a __tree__) that encodes the sequence of operations required to compute the expression as well as the dependency structure between operations.
 - For example the expression ``e^{x^2+y^2}`` is represented by $(Resource("https://www.dropbox.com/s/50m0nnqhfrkz6o5/expression_graph.png?raw=1", :height=>250)) 
    - with nodes representing the input values ``x`` and ``y`` together with every __“basic” operation__ like addition and exponentiation that is performed in computing the value of the expression. 
    - Edges in the expression graph represent immediate dependencies between operations.
@@ -326,7 +328,7 @@ Given an expression graph object,
 # ╔═╡ c57bcac2-9cb7-4c6d-ac7f-3436d3cbcc6f
 md"""
 ## User-defined functions and Derivative-free
-In the cases where the __built-in library is insufficient__, there has historically been no user-friendly way to incorporate user-defined functions into AMLs.
+In the cases where the __built-in library is insufficient__, there has historically been no user-friendly way to incorporate user-defined functions into AMLs.
 
 A compelling application for user-defined
 functions is __optimal control problems constrained by differential equations__
@@ -364,8 +366,8 @@ begin
 	set_silent(model2)
 	@variable(model2,x[1:2], start=start_point_v)
 	@objective(model2,Max,sum(x))
-	@NLconstraint(model2,my_squareroot(x[1]^2+x[2]^2)<=1)
-	# @NLconstraint(model2,sqrt(x[1]^2+x[2]^2)<=1)
+	# @NLconstraint(model2,my_squareroot(x[1]^2+x[2]^2)<=1)
+	@NLconstraint(model2,sqrt(x[1]^2+x[2]^2)<=1)
 	optimize!(model2)
 	t2_status = termination_status(model2)
 	p2_status = primal_status(model2)
@@ -400,6 +402,7 @@ __Remarks__
   - registers the nonlinear function with the symbolic name __```my_squareroot```__ and passes a reference to the function defined above. 
   - The second argument __1__ indicates that the input to the function is __univariate__. 
   - The __```autodiff=true```__ option instructs JuMP to automatically __compute the derivatives__ of the user-defined function.
+- The solver [`Ipopt`](https://coin-or.github.io/Ipopt/) is used.
 
 """
 
@@ -625,7 +628,8 @@ function solveSudoku(initial_baord)
 		sudoku = Model(HiGHS.Optimizer)
 		set_silent(sudoku)
 		@variable(sudoku,xx[i=1:9,j=1:9,k=1:9],Bin)
-		
+
+		# pupulate the variable x with the clues
 		for i in 1:9
 		    for j in 1:9
 		        # If the space isn't empty
@@ -636,6 +640,7 @@ function solveSudoku(initial_baord)
 		        end
 		    end
 		end
+		# constraint 1
 		for i in 1:9  # For each row
 		    for j in 1:9  # and each column
 		        # Sum across all the possible digits. One and only one of the digits
@@ -643,6 +648,7 @@ function solveSudoku(initial_baord)
 		        @constraint(sudoku, sum(xx[i, j, k] for k in 1:9) == 1)
 		    end
 		end
+		# constraint 2
 		for ind in 1:9  # Each row, OR each column
 		    for k in 1:9  # Each digit
 		        # Sum across columns (j) - row constraint
@@ -651,6 +657,8 @@ function solveSudoku(initial_baord)
 		        @constraint(sudoku, sum(xx[i, ind, k] for i in 1:9) == 1)
 		    end
 		end
+	
+		# constraint 3
 		for i in 1:3:7
 	    for j in 1:3:7
 	        for k in 1:9
@@ -666,6 +674,7 @@ function solveSudoku(initial_baord)
 		optimize!(sudoku)
 		x_val = value.(xx);
 		sol = zeros(Int, 9, 9)  # 9x9 matrix of integers
+	    # read the solution
 		for i in 1:9
 		    for j in 1:9
 		        for k in 1:9
@@ -680,6 +689,28 @@ function solveSudoku(initial_baord)
 		end
 		sol
 	end
+
+# ╔═╡ 1bd437bf-d7df-4ae3-9358-51808a932ab5
+html"""
+
+<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Source+Sans+Pro" rel="stylesheet">
+
+
+
+<div style="width:100%;border:1px solid red;padding: 10px; ">
+  <div style="text-align:center;">
+    <div class="wrapper-2">
+      <h6 style="color:blue;font:'Kaushan Script';font-size:4em;">Thank you !</h6>
+      <p>Thanks for attending.</p>
+    </div>
+</div>
+</div>
+
+
+
+"""
+
+
 
 # ╔═╡ 4260d8f7-2927-41ee-8c34-1e6ba37e4cbf
 HTML("
@@ -813,7 +844,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.8.2"
 manifest_format = "2.0"
-project_hash = "013dc2beba5a09216b8ceb023aaad6488cbe2693"
+project_hash = "0101d6977fb35bb03de289bd8d1f14c46d918325"
 
 [[deps.ASL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -2168,7 +2199,7 @@ version = "1.4.1+0"
 # ╟─c57bcac2-9cb7-4c6d-ac7f-3436d3cbcc6f
 # ╟─43a9716e-d735-47d1-b209-77754bad82ab
 # ╟─78e26d05-cd83-4029-a300-b21a38f7d724
-# ╟─738f6aa6-7780-41c4-89ef-948946ba81b6
+# ╠═738f6aa6-7780-41c4-89ef-948946ba81b6
 # ╟─197a354d-e466-4aeb-8590-b176f6fc96bd
 # ╟─38573590-c70a-413c-a141-8733b0ee1a6e
 # ╟─53357188-bb77-41aa-b7a5-3dfe7ff4739e
@@ -2184,8 +2215,9 @@ version = "1.4.1+0"
 # ╟─420e8a1e-3756-41f2-987a-86acfc099456
 # ╠═15fd06f8-1258-4edf-83c2-382d480f2d8f
 # ╟─042a8b3b-fdc5-41f8-963e-3f51d147fe3b
-# ╟─4a1396af-864f-4329-b833-6f2fea1d9309
-# ╟─4260d8f7-2927-41ee-8c34-1e6ba37e4cbf
+# ╠═4a1396af-864f-4329-b833-6f2fea1d9309
+# ╟─1bd437bf-d7df-4ae3-9358-51808a932ab5
+# ╠═4260d8f7-2927-41ee-8c34-1e6ba37e4cbf
 # ╟─5dcd42ad-19c1-4eee-9d89-a1bb5d6c67f2
 # ╠═a563c4b9-01d0-4411-97ae-8019414330b1
 # ╟─00000000-0000-0000-0000-000000000001

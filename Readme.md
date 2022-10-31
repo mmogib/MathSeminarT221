@@ -1,9 +1,8 @@
-## My personal repo for Julia Docker
+# Optimization Algebraic Modeling
+### Mohammed Alshahrani
+### Monday October 31, 2022
 
-*Steps*
+## Abstract
+Many researchers at a point of time have to solve an optimization problem. These problems range from simple unconstrained function to a complex model of many variables and constraints. In this talk, we introduce the concept of algebraic modeling in optimization which is used to translate between the algebraic form of the modeler and the standard form of the solver. It aims to allow researchers to express their optimization problems in a natural, algebraic form similar to the original mathematical expressions. Examples from different branches of optimization will be given for illustration.
 
-* To build a container ```bash docker-compose up -d ```
-
-* To build an image ```bash  docker build -t mmogib/myjulia:latest --build-arg JULIA_VERSION=1.5.3 . ```
-
-* Run ```docker exec -it [name] /bin/zsh```
+## 
